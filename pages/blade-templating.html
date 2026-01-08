@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blade Templating & Components - Laravel Mastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+    <style>
+        .sidebar {
+            background-color: var(--sidebar-bg);
+        }
+
+        .content {
+            margin-left: 280px;
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fab fa-laravel logo-icon"></i>
+                <span class="logo-text">Laravel Mastery</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="installation.html"><i class="fas fa-download"></i> การติดตั้ง</a></li>
+                    <li><a href="routing-advanced.html"><i class="fas fa-route"></i> Routing & Middleware</a></li>
+                    <li><a href="mvc-controllers.html"><i class="fas fa-code-branch"></i> MVC & Controllers</a></li>
+                    <li><a href="database-migrations.html"><i class="fas fa-database"></i> Database & Migration</a></li>
+                    <li><a href="eloquent-orm.html"><i class="fas fa-server"></i> Eloquent & Relations</a></li>
+                    <li><a href="blade-templating.html" class="active"><i class="fas fa-paint-brush"></i> Blade
+                            Template</a></li>
+                    <li><a href="validation-requests.html"><i class="fas fa-check-circle"></i> Validation & Requests</a>
+                    </li>
+                    <li><a href="api-development.html"><i class="fas fa-cloud"></i> API Development</a></li>
+                    <li><a href="auth-kits.html"><i class="fas fa-user-shield"></i> Auth Starter Kits</a></li>
+                    <li><a href="file-storage.html"><i class="fas fa-folder-open"></i> File Storage</a></li>
+                    <li><a href="mail-notifications.html"><i class="fas fa-envelope"></i> Mail & Notifications</a></li>
+                    <li><a href="localization.html"><i class="fas fa-language"></i> Localization (i18n)</a></li>
+                    <li><a href="collections-helpers.html"><i class="fas fa-tools"></i> Collections & Helpers</a></li>
+                    <li><a href="error-logging.html"><i class="fas fa-exclamation-triangle"></i> Error & Logging</a>
+                    </li>
+                    <li><a href="crud-full-example.html"><i class="fas fa-check-double"></i> โปรเจกต์ CRUD</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="mobile-header">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <span class="logo-text">Laravel Mastery</span>
+            </header>
+
+            <div class="section">
+                <h1>Blade Templating & Components</h1>
+                <p>Blade ไม่ใช่แค่ไฟล์ HTML ธรรมดา
+                    แต่มันคือระบบที่ช่วยให้เราสร้างเว็บไซต์ที่เป็นระเบียบและลดการเขียนโค้ดซ้ำซ้อน</p>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                <h2>1. Layout Inheritance (การสืบทอด Layout)</h2>
+                <p>เราไม่ต้องเขียน Header หรือ Footer ซ้ำในทุกหน้า เพียงแค่สร้าง Master Layout ไว้</p>
+
+                <h3>Master Layout (layouts/app.blade.php)</h3>
+                <pre><code class="language-php">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;@yield('title')&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;nav&gt;...&lt;/nav&gt;
+        
+        &lt;div class="container"&gt;
+            @yield('content')
+        &lt;/div&gt;
+
+        &lt;footer&gt;...&lt;/footer&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                <h3>Page Child (welcome.blade.php)</h3>
+                <pre><code class="language-php">@extends('layouts.app')
+
+@section('title', 'หน้าแรก')
+
+@section('content')
+    &lt;h1&gt;ยินดีต้อนรับสู่เว็บไซต์&lt;/h1&gt;
+    &lt;p&gt;เนื้อหาหน้าแรก...&lt;/p&gt;
+@endsection</code></pre>
+
+                <h2>2. Blade Components</h2>
+                <p>Components คือการสร้างบล็อก HTML ที่ใช้งานซ้ำๆ ได้ เช่น ปุ่ม (Button) หรือ การ์ด (Card)</p>
+                <pre><code class="language-php">// ใช้ artisan สร้าง component
+php artisan make:component Alert</code></pre>
+
+                <p>การเรียกใช้งานใน HTML:</p>
+                <pre><code class="language-php">&lt;x-alert type="error" message="เกิดข้อผิดพลาด!" /&gt;</code></pre>
+
+                <h2>3. Directives ที่ใช้บ่อย</h2>
+                <p>Blade มีทางลัดให้เราเขียน PHP ใน HTML ได้สั้นลง</p>
+                <pre><code class="language-php">{{-- จัดการ Authentication --}}
+@auth
+    &lt;p&gt;สวัสดีคุณ {{ auth()->user()->name }}&lt;/p&gt;
+@else
+    &lt;a href="/login"&gt;เข้าสู่ระบบ&lt;/a&gt;
+@endauth
+
+{{-- การวนลูปที่ปลอดภัย --}}
+@forelse($users as $user)
+    &lt;li&gt;{{ $user->name }}&lt;/li&gt;
+@empty
+    &lt;li&gt;ไม่พบผู้ใช้งาน&lt;/li&gt;
+@endforelse</code></pre>
+
+                <div class="highlight-box">
+                    <strong>คำคม Blade:</strong> "Write less, do more" - Blade ถูกคอมไพล์เป็นโค้ด PHP ปกติ 100%
+                    จึงไม่มีผลเสียต่อประสิทธิภาพของเว็บ
+                </div>
+            </div>
+
+            <div class="section">
+                <div style="display: flex; justify-content: space-between;">
+                    <a href="eloquent-orm.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i>
+                        บทเรียนก่อนหน้า</a>
+                    <a href="validation-requests.html" class="btn btn-primary">ถัดไป: Validation & Requests <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2026 Laravel Mastery Tutorial. สร้างหน้าตาเว็บให้ทรงพลังด้วย Blade</p>
+            </footer>
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

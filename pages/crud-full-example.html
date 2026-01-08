@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full CRUD Example - Laravel Mastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+    <style>
+        .sidebar {
+            background-color: var(--sidebar-bg);
+        }
+
+        .content {
+            margin-left: 280px;
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fab fa-laravel logo-icon"></i>
+                <span class="logo-text">Laravel Mastery</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="installation.html"><i class="fas fa-download"></i> การติดตั้ง</a></li>
+                    <li><a href="routing-advanced.html"><i class="fas fa-route"></i> Routing & Middleware</a></li>
+                    <li><a href="mvc-controllers.html"><i class="fas fa-code-branch"></i> MVC & Controllers</a></li>
+                    <li><a href="database-migrations.html"><i class="fas fa-database"></i> Database & Migration</a></li>
+                    <li><a href="eloquent-orm.html"><i class="fas fa-server"></i> Eloquent & Relations</a></li>
+                    <li><a href="blade-templating.html"><i class="fas fa-paint-brush"></i> Blade Template</a></li>
+                    <li><a href="validation-requests.html"><i class="fas fa-check-circle"></i> Validation & Requests</a>
+                    </li>
+                    <li><a href="api-development.html"><i class="fas fa-cloud"></i> API Development</a></li>
+                    <li><a href="auth-kits.html"><i class="fas fa-user-shield"></i> Auth Starter Kits</a></li>
+                    <li><a href="file-storage.html"><i class="fas fa-folder-open"></i> File Storage</a></li>
+                    <li><a href="mail-notifications.html"><i class="fas fa-envelope"></i> Mail & Notifications</a></li>
+                    <li><a href="localization.html"><i class="fas fa-language"></i> Localization (i18n)</a></li>
+                    <li><a href="collections-helpers.html"><i class="fas fa-tools"></i> Collections & Helpers</a></li>
+                    <li><a href="error-logging.html"><i class="fas fa-exclamation-triangle"></i> Error & Logging</a>
+                    </li>
+                    <li><a href="crud-full-example.html" class="active"><i class="fas fa-check-double"></i> โปรเจกต์
+                            CRUD</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="mobile-header">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <span class="logo-text">Laravel Mastery</span>
+            </header>
+
+            <div class="section">
+                <h1>Full CRUD Project: ระบบจัดการงาน (Task Manager)</h1>
+                <p>ในบทสุดท้ายนี้ เราจะนำทุกอย่างที่เรียนมาประกอบเป็นระบบ CRUD ที่ใช้งานได้จริง</p>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                <h2>Step 1: เตรียม Model & Table</h2>
+                <pre><code class="language-php">php artisan make:model Task -m</code></pre>
+                <p>ในไฟล์ Migration:</p>
+                <pre><code class="language-php">public function up() {
+    Schema::create('tasks', function (Blueprint $table) {
+        $table->id();
+        $table->string('title');
+        $table->boolean('is_completed')->default(false);
+        $table->timestamps();
+    });
+}</code></pre>
+
+                <h2>Step 2: เขียน Controller (CRUD Logic)</h2>
+                <pre><code class="language-php">class TaskController extends Controller {
+    // แสดงรายการ
+    public function index() {
+        $tasks = Task::latest()->get();
+        return view('tasks.index', compact('tasks'));
+    }
+
+    // บันทึก
+    public function store(Request $request) {
+        $validated = $request->validate(['title' => 'required|min:3']);
+        Task::create($validated);
+        return back()->with('success', 'บันทึกสำเร็จ');
+    }
+
+    // ลบ
+    public function destroy(Task $task) {
+        $task->delete();
+        return back();
+    }
+}</code></pre>
+
+                <h2>Step 3: ออกแบบ View ด้วย Blade</h2>
+                <pre><code class="language-php">&lt;form action="{{ route('tasks.store') }}" method="POST"&gt;
+    @csrf
+    &lt;input type="text" name="title"&gt;
+    &lt;button type="submit"&gt;เพิ่มงาน&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;ul&gt;
+    @foreach($tasks as $task)
+        &lt;li&gt;
+            {{ $task->title }}
+            &lt;form action="{{ route('tasks.destroy', $task) }}" method="POST"&gt;
+                @csrf @method('DELETE')
+                &lt;button type="submit"&gt;ลบ&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/li&gt;
+    @endforeach
+&lt;/ul&gt;</code></pre>
+
+                <div class="highlight-box">
+                    <strong>บทสรุป:</strong> ยินดีด้วย! คุณได้สร้างแอปพลิเคชัน Laravel ตัวแรกของคุณสำเร็จแล้ว
+                    ความรู้พื้นฐานเหล่านี้คือรากฐานที่มั่นคงในการต่อยอดสู่ระบบที่ซับซ้อนยิ่งขึ้น
+                </div>
+            </div>
+
+            <div class="section">
+                <div style="display: flex; justify-content: center;">
+                    <a href="../index.html" class="btn btn-primary"><i class="fas fa-home"></i> กลับหน้าหลัก</a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2026 Laravel Mastery Tutorial. จบหลักสูตรพื้นฐานเจาะลึก</p>
+            </footer>
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

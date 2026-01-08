@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail & Notifications - Laravel Mastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fab fa-laravel logo-icon"></i>
+                <span class="logo-text">Laravel Mastery</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="installation.html"><i class="fas fa-download"></i> การติดตั้ง</a></li>
+                    <li><a href="routing-advanced.html"><i class="fas fa-route"></i> Routing & Middleware</a></li>
+                    <li><a href="mvc-controllers.html"><i class="fas fa-code-branch"></i> MVC & Controllers</a></li>
+                    <li><a href="database-migrations.html"><i class="fas fa-database"></i> Database & Migration</a></li>
+                    <li><a href="eloquent-orm.html"><i class="fas fa-server"></i> Eloquent & Relations</a></li>
+                    <li><a href="blade-templating.html"><i class="fas fa-paint-brush"></i> Blade Template</a></li>
+                    <li><a href="validation-requests.html"><i class="fas fa-check-circle"></i> Validation & Requests</a>
+                    </li>
+                    <li><a href="api-development.html"><i class="fas fa-cloud"></i> API Development</a></li>
+                    <li><a href="auth-kits.html"><i class="fas fa-user-shield"></i> Auth Starter Kits</a></li>
+                    <li><a href="file-storage.html"><i class="fas fa-folder-open"></i> File Storage</a></li>
+                    <li><a href="mail-notifications.html" class="active"><i class="fas fa-envelope"></i> Mail &
+                            Notifications</a></li>
+                    <li><a href="localization.html"><i class="fas fa-language"></i> Localization (i18n)</a></li>
+                    <li><a href="collections-helpers.html"><i class="fas fa-tools"></i> Collections & Helpers</a></li>
+                    <li><a href="error-logging.html"><i class="fas fa-exclamation-triangle"></i> Error & Logging</a>
+                    </li>
+                    <li><a href="crud-full-example.html"><i class="fas fa-check-double"></i> โปรเจกต์ CRUD</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="mobile-header">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <span class="logo-text">Laravel Mastery</span>
+            </header>
+
+            <div class="section">
+                <h1>Mail & Notifications</h1>
+                <p>สร้างความผูกพันกับผู้ใช้ด้วยการส่งอีเมลและการแจ้งเตือนที่เป็นระบบ</p>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                <h2>1. การสร้าง Mailable</h2>
+                <p>Mailable คือ Class ที่ใช้กำหนดเนื้อหาและรูปแบบของอีเมล</p>
+                <pre><code class="language-php">php artisan make:mail WelcomeMail</code></pre>
+                <p>ตัวอย่างการตั้งค่าใน <code>app/Mail/WelcomeMail.php</code>:</p>
+                <pre><code class="language-php">public function content(): Content
+{
+    return new Content(
+        view: 'emails.welcome', // กำหนดหน้า Blade ที่จะใช้เป็นเนื้อหาเมล
+        with: ['name' => $this->user->name],
+    );
+}</code></pre>
+
+                <h2>2. การเพิ่มปุ่ม (Buttons/Markdown)</h2>
+                <p>ถ้าคุณใช้ Markdown Mail คุณจะได้ดีไซน์เมลที่สวยงามและรองรับ Responsive อัตโนมัติ</p>
+                <pre><code class="language-php">php artisan make:mail OrderShipped --markdown=emails.orders.shipped</code></pre>
+
+                <h2>3. การส่งเมล</h2>
+                <pre><code class="language-php">use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
+
+Mail::to($user->email)->send(new WelcomeMail($user));</code></pre>
+
+                <h2>4. ระบบ Notifications</h2>
+                <p>เจ๋งกว่าเมล! เพราะส่งได้ทั้ง Mail, Database (แสดงหน้าเว็บ), และ Slack พร้อมกันในคำสั่งเดียว</p>
+                <pre><code class="language-php">php artisan make:notification InvoicePaid
+
+// การเรียกใช้งาน
+$user->notify(new InvoicePaid($invoice));</code></pre>
+
+                <div class="highlight-box">
+                    <strong>Tip:</strong> ใช้ <strong>Queue</strong> เข้ามาช่วยในการส่งเมล
+                    เพื่อไม่ให้หน้าเว็บค้างรอจนเมลส่งเสร็จ จะทำให้ User Experience ดีขึ้นมากครับ
+                </div>
+            </div>
+
+            <div class="section">
+                <div style="display: flex; justify-content: space-between;">
+                    <a href="file-storage.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
+                    <a href="localization.html" class="btn btn-primary">ถัดไป: Localization <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2026 Laravel Mastery Tutorial. สื่อสารอย่างมืออาชีพด้วย Laravel</p>
+            </footer>
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

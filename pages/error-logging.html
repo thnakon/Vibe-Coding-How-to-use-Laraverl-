@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error & Logging - Laravel Mastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fab fa-laravel logo-icon"></i>
+                <span class="logo-text">Laravel Mastery</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="installation.html"><i class="fas fa-download"></i> การติดตั้ง</a></li>
+                    <li><a href="routing-advanced.html"><i class="fas fa-route"></i> Routing & Middleware</a></li>
+                    <li><a href="mvc-controllers.html"><i class="fas fa-code-branch"></i> MVC & Controllers</a></li>
+                    <li><a href="database-migrations.html"><i class="fas fa-database"></i> Database & Migration</a></li>
+                    <li><a href="eloquent-orm.html"><i class="fas fa-server"></i> Eloquent & Relations</a></li>
+                    <li><a href="blade-templating.html"><i class="fas fa-paint-brush"></i> Blade Template</a></li>
+                    <li><a href="validation-requests.html"><i class="fas fa-check-circle"></i> Validation & Requests</a>
+                    </li>
+                    <li><a href="api-development.html"><i class="fas fa-cloud"></i> API Development</a></li>
+                    <li><a href="auth-kits.html"><i class="fas fa-user-shield"></i> Auth Starter Kits</a></li>
+                    <li><a href="file-storage.html"><i class="fas fa-folder-open"></i> File Storage</a></li>
+                    <li><a href="mail-notifications.html"><i class="fas fa-envelope"></i> Mail & Notifications</a></li>
+                    <li><a href="localization.html"><i class="fas fa-language"></i> Localization (i18n)</a></li>
+                    <li><a href="collections-helpers.html"><i class="fas fa-tools"></i> Collections & Helpers</a></li>
+                    <li><a href="error-logging.html" class="active"><i class="fas fa-exclamation-triangle"></i> Error &
+                            Logging</a></li>
+                    <li><a href="crud-full-example.html"><i class="fas fa-check-double"></i> โปรเจกต์ CRUD</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="mobile-header">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <span class="logo-text">Laravel Mastery</span>
+            </header>
+
+            <div class="section">
+                <h1>Error Handling & Logging</h1>
+                <p>การจัดการข้อผิดพลาดและบันทึกประวัติการทำงานของระบบเพื่อความปลอดภัยและง่ายต่อการ Debug</p>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                <h2>1. การบันทึก Logging</h2>
+                <p>เราสามารถใช้ <code>Log</code> facade เพื่อบันทึกข้อมูลและเหตุการณ์สำคัญลงในไฟล์
+                    <code>storage/logs/laravel.log</code></p>
+                <pre><code class="language-php">use Illuminate\Support\Facades\Log;
+
+Log::info('ผู้ใช้ ID 5 เข้ามาแกไขข้อมูล');
+Log::warning('พบความพยายามในการเข้าระบบที่ผิดพลาดหลายครั้ง');
+Log::error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก API ภายนอก!');</code></pre>
+
+                <h2>2. การปรับแต่งหน้า Error</h2>
+                <p>เมื่อผู้ใช้เจอหน้า 404 หรือ 500 เราสามารถสร้างดีไซน์ให้เข้ากับแบรนด์ของเราได้เพียงแค่สร้างไฟล์ใน
+                    <code>resources/views/errors/</code></p>
+                <pre><code class="language-php">// เช่นการสร้างหน้า resources/views/errors/404.blade.php
+&lt;div class="error-page"&gt;
+    &lt;h1&gt;ขออภัยครับ ไม่พบหน้าที่คุณต้องการ&lt;/h1&gt;
+    &lt;a href="/"&gt;กลับไปหน้าหลัก&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+                <h2>3. การใช้ Try-Catch & Exception</h2>
+                <p>ในการทำงานที่มีความเสี่ยง เช่น การเชื่อมข้อมูลข้าม Server เราควรใช้ Try-Catch เสมอ</p>
+                <pre><code class="language-php">try {
+    $data = ExternalAPI::fetch();
+} catch (\Exception $e) {
+    Log::error("API Error: " . $e->getMessage());
+    return back()->with('error', 'ระบบขัดข้องชั่วคราว กรุณาลองใหม่ภายหลัง');
+}</code></pre>
+
+                <div class="highlight-box">
+                    <strong>คำเตือน:</strong> อย่าลืมเช็ค <code>APP_DEBUG=false</code> ในไฟล์ <code>.env</code>
+                    เวลาใช้งานจริง เพื่อไม่ให้ระบบแสดงความลับของโค้ดแก่คนแปลกหน้าครับ
+                </div>
+            </div>
+
+            <div class="section">
+                <div style="display: flex; justify-content: space-between;">
+                    <a href="collections-helpers.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i>
+                        ย้อนกลับ</a>
+                    <a href="crud-full-example.html" class="btn btn-primary">ปิดท้าย: โปรเจกต์ CRUD <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2026 Laravel Mastery Tutorial. เพราะระบบที่ดี คือระบบที่ตรวจสอบได้</p>
+            </footer>
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

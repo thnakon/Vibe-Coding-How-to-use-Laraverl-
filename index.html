@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Laravel - เรียนรู้ Laravel เจาะลึกครบวงจร</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fab fa-laravel logo-icon"></i>
+                <span class="logo-text">Laravel Mastery</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="pages/installation.html"><i class="fas fa-download"></i> การติดตั้ง</a></li>
+                    <li><a href="pages/routing-advanced.html"><i class="fas fa-route"></i> Routing & Middleware</a></li>
+                    <li><a href="pages/mvc-controllers.html"><i class="fas fa-code-branch"></i> MVC & Controllers</a>
+                    </li>
+                    <li><a href="pages/database-migrations.html"><i class="fas fa-database"></i> Database &
+                            Migration</a></li>
+                    <li><a href="pages/eloquent-orm.html"><i class="fas fa-server"></i> Eloquent & Relations</a></li>
+                    <li><a href="pages/blade-templating.html"><i class="fas fa-paint-brush"></i> Blade Template</a></li>
+                    <li><a href="pages/validation-requests.html"><i class="fas fa-check-circle"></i> Validation &
+                            Requests</a></li>
+                    <li><a href="pages/api-development.html"><i class="fas fa-cloud"></i> API Development</a></li>
+                    <li><a href="pages/auth-kits.html"><i class="fas fa-user-shield"></i> Auth Starter Kits</a></li>
+                    <li><a href="pages/file-storage.html"><i class="fas fa-folder-open"></i> File Storage</a></li>
+                    <li><a href="pages/mail-notifications.html"><i class="fas fa-envelope"></i> Mail & Notifications</a>
+                    </li>
+                    <li><a href="pages/localization.html"><i class="fas fa-language"></i> Localization (i18n)</a></li>
+                    <li><a href="pages/collections-helpers.html"><i class="fas fa-tools"></i> Collections & Helpers</a>
+                    </li>
+                    <li><a href="pages/error-logging.html"><i class="fas fa-exclamation-triangle"></i> Error &
+                            Logging</a></li>
+                    <li><a href="pages/crud-full-example.html"><i class="fas fa-check-double"></i> โปรเจกต์ CRUD</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="mobile-header">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <span class="logo-text">Laravel Mastery</span>
+            </header>
+
+            <section id="hero" class="section hero">
+                <div class="hero-content">
+                    <h1>Laravel <span class="highlight">Deep Dive</span></h1>
+                    <p>ยินดีต้อนรับสู่คู่มือการเรียนรู้ Laravel แบบเจาะลึกที่สุด! เราจะแยกเนื้อหาออกเป็นส่วนๆ
+                        เพื่อให้คุณเข้าใจทุกแง่มุมของ Framework นี้อย่างมืออาชีพ</p>
+                    <div class="hero-actions">
+                        <a href="pages/installation.html" class="btn btn-primary">เริ่มบทเรียนแรก</a>
+                    </div>
+                </div>
+                <div class="hero-illustration">
+                    <div class="floating-icons">
+                        <i class="fab fa-laravel"></i>
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section">
+                <h2>เริ่มเรียนรู้ตามหัวข้อ</h2>
+                <div class="grid">
+                    <a href="pages/installation.html" class="card">
+                        <i class="fas fa-tools"></i>
+                        <h3>1. การติดตั้ง</h3>
+                        <p>เตรียมความพร้อมและปรับแต่ง Environment ให้เหมาะกับการพัฒนา</p>
+                    </a>
+                    <a href="pages/routing-advanced.html" class="card">
+                        <i class="fas fa-route"></i>
+                        <h3>2. Advanced Routing</h3>
+                        <p>เรียนรู้เรื่อง Route Groups, Prefixes และการป้องกันด้วย Middleware</p>
+                    </a>
+                    <a href="pages/database-migrations.html" class="card">
+                        <i class="fas fa-database"></i>
+                        <h3>3. Database & Seeding</h3>
+                        <p>จัดการฐานข้อมูลและจำลองข้อมูลนับพันภายในไม่กี่วินาที</p>
+                    </a>
+                    <a href="pages/crud-full-example.html" class="card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>4. Full CRUD Case Study</h3>
+                        <p>สร้างเวิร์กโฟลว์การทำงานจริงตั้งแต่ต้นจนจบ</p>
+                    </a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2026 Laravel Mastery Tutorial. เจาะลึกทุกรายละเอียดของ Laravel</p>
+            </footer>
+        </main>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

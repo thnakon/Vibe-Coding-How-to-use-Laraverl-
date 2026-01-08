@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Installation - Laravel Mastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+    <style>
+        .sidebar {
+            background-color: var(--sidebar-bg);
+        }
+
+        .content {
+            margin-left: 280px;
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fab fa-laravel logo-icon"></i>
+                <span class="logo-text">Laravel Mastery</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="installation.html" class="active"><i class="fas fa-download"></i> การติดตั้ง</a></li>
+                    <li><a href="routing-advanced.html"><i class="fas fa-route"></i> Routing & Middleware</a></li>
+                    <li><a href="mvc-controllers.html"><i class="fas fa-code-branch"></i> MVC & Controllers</a></li>
+                    <li><a href="database-migrations.html"><i class="fas fa-database"></i> Database & Migration</a></li>
+                    <li><a href="eloquent-orm.html"><i class="fas fa-server"></i> Eloquent & Relations</a></li>
+                    <li><a href="blade-templating.html"><i class="fas fa-paint-brush"></i> Blade Template</a></li>
+                    <li><a href="validation-requests.html"><i class="fas fa-check-circle"></i> Validation & Requests</a>
+                    </li>
+                    <li><a href="api-development.html"><i class="fas fa-cloud"></i> API Development</a></li>
+                    <li><a href="auth-kits.html"><i class="fas fa-user-shield"></i> Auth Starter Kits</a></li>
+                    <li><a href="file-storage.html"><i class="fas fa-folder-open"></i> File Storage</a></li>
+                    <li><a href="mail-notifications.html"><i class="fas fa-envelope"></i> Mail & Notifications</a></li>
+                    <li><a href="localization.html"><i class="fas fa-language"></i> Localization (i18n)</a></li>
+                    <li><a href="collections-helpers.html"><i class="fas fa-tools"></i> Collections & Helpers</a></li>
+                    <li><a href="error-logging.html"><i class="fas fa-exclamation-triangle"></i> Error & Logging</a>
+                    </li>
+                    <li><a href="crud-full-example.html"><i class="fas fa-check-double"></i> โปรเจกต์ CRUD</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="mobile-header">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <span class="logo-text">Laravel Mastery</span>
+            </header>
+
+            <div class="section">
+                <h1>การติดตั้งอย่างละเอียด</h1>
+                <p>ก้าวแรกของการเป็นนักพัฒนา Laravel คือการเตรียมสภาพแวดล้อม (Environment) ให้พร้อมที่สุด</p>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                <h2>1. ความต้องการของระบบ (Server Requirements)</h2>
+                <p>Laravel เวอร์ชันล่าสุดต้องการ PHP เวอร์ชันที่ระบุและ Extension ที่จำเป็นต่อไปนี้:</p>
+                <ul>
+                    <li>PHP >= 8.1</li>
+                    <li>BCMath PHP Extension</li>
+                    <li>Ctype PHP Extension</li>
+                    <li>Fileinfo PHP Extension</li>
+                    <li>JSON PHP Extension</li>
+                    <li>Mbstring PHP Extension</li>
+                    <li>OpenSSL PHP Extension</li>
+                    <li>PDO PHP Extension</li>
+                    <li>Tokenizer PHP Extension</li>
+                    <li>XML PHP Extension</li>
+                </ul>
+
+                <h2>2. การติดตั้งผ่าน Laravel Installer (แนะนำ)</h2>
+                <p>นอกจากวิธี <code>composer create-project</code> แล้ว คุณยังสามารถติดตั้งตัวช่วยสร้างโปรเจกต์ของ
+                    Laravel ได้โดยตรงเพื่อความรวดเร็ว:</p>
+                <pre><code>// ติดตั้งตัว Installer ทั่วเครื่อง (ทำครั้งเดียว)
+composer global require laravel/installer
+
+// สร้างโปรเจกต์ใหม่ด้วยคำสั่งสั้นๆ
+laravel new my-awesome-app</code></pre>
+
+                <h2>3. การตั้งค่าหลังติดตั้ง</h2>
+                <p>เมื่อสร้างโปรเจกต์เสร็จแล้ว มีสิ่งสำคัญที่ต้องทำเพื่อให้แอปทำงานได้ปลอดภัย:</p>
+
+                <h3>การสร้าง App Key</h3>
+                <p>Laravel ใช้ Key นี้ในการเข้ารหัสข้อมูลต่างๆ (ปกติจะถูกสร้างมาให้ตอนติดตั้ง
+                    แต่อาจต้องรันเองถ้าย้ายโปรเจกต์มาจากที่อื่น)</p>
+                <pre><code>php artisan key:generate</code></pre>
+
+                <h3>การตั้งค่าสิทธิ์โฟลเดอร์ (สำหรับ Linux/macOS)</h3>
+                <pre><code>chmod -R 775 storage bootstrap/cache</code></pre>
+
+                <div class="highlight-box">
+                    <strong>คำแนะนำ:</strong> สำหรับผู้เริ่มใหม่ แนะนำให้ใช้ <strong>Laravel Herd</strong> (macOS) หรือ
+                    <strong>XAMPP/Laragon</strong> (Windows) เพื่อความง่ายในการจัดการ PHP และ Database
+                </div>
+            </div>
+
+            <div class="section">
+                <div style="display: flex; justify-content: flex-end;">
+                    <a href="routing-advanced.html" class="btn btn-primary">เรื่อง Routing ต่อ <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2026 Laravel Mastery Tutorial. เริ่มต้นอย่างถูกต้อง</p>
+            </footer>
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>
